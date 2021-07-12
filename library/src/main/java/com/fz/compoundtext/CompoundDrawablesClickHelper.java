@@ -1,21 +1,38 @@
-package com.peihua.demo;
+/*
+ * Copyright (C) Globalegrow E-Commerce Co. , Ltd. 2007-2018.
+ * All rights reserved.
+ * This software is the confidential and proprietary information
+ * of Globalegrow E-Commerce Co. , Ltd. ("Confidential Information").
+ * You shall not disclose such Confidential Information and shall
+ * use it only in accordance with the terms of the license agreement
+ * you entered into with Globalegrow.
+ */
 
+package com.fz.compoundtext;
+
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.text.TextUtilsCompat;
-import android.support.v4.view.ViewCompat;
 import android.view.MotionEvent;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.text.TextUtilsCompat;
+import androidx.core.view.ViewCompat;
 
 import java.util.Locale;
 
 /**
  * CompoundDrawable 点击事件辅助类
- * Created by dingpeihua on 2017/8/29.
+ *
+ * @author dingpeihua
+ * @version 1.0
+ * @date 2020/5/10 11:50
  */
 public final class CompoundDrawablesClickHelper {
-    private IDrawableClickAble iDrawableClickAble;
+    private final IDrawableClickAble iDrawableClickAble;
     /**
      * 各个方向的图片资源
      **/
@@ -49,13 +66,33 @@ public final class CompoundDrawablesClickHelper {
                                         Drawable mStartDrawable, Drawable mTopDrawable,
                                         Drawable mEndDrawable, Drawable mBottomDrawable) {
         this.iDrawableClickAble = iDrawableClickAble;
-        this.mStartDrawable = wrap(mStartDrawable);
-        this.mTopDrawable = wrap(mTopDrawable);
-        this.mEndDrawable = wrap(mEndDrawable);
-        this.mBottomDrawable = wrap(mBottomDrawable);
+        setCompoundDrawables(mStartDrawable, mTopDrawable, mEndDrawable, mBottomDrawable);
+    }
+
+    public CompoundDrawablesClickHelper(@NonNull IDrawableClickAble iDrawableClickAble) {
+        this.iDrawableClickAble = iDrawableClickAble;
+    }
+
+    public CompoundDrawablesClickHelper(@NonNull IDrawableClickAble iDrawableClickAble, @NonNull Drawable[] drawables) {
+        this.iDrawableClickAble = iDrawableClickAble;
+        setCompoundDrawables(drawables);
+    }
+
+    public void setCompoundDrawables(@NonNull Drawable[] drawables) {
+        setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawables[3]);
+    }
+
+    public void setCompoundDrawables(@Nullable Drawable start, @Nullable Drawable top,
+                                     @Nullable Drawable end, @Nullable Drawable bottom) {
+        iDrawableClickAble.setClickable(true);
+        iDrawableClickAble.setFocusable(true);
+        this.mStartDrawable = wrap(start);
         setBounds(this.mStartDrawable);
+        this.mTopDrawable = wrap(top);
         setBounds(this.mTopDrawable);
+        this.mEndDrawable = wrap(end);
         setBounds(this.mEndDrawable);
+        this.mBottomDrawable = wrap(bottom);
         setBounds(this.mBottomDrawable);
         setDrawables();
     }
@@ -64,7 +101,7 @@ public final class CompoundDrawablesClickHelper {
         if (iDrawableClickAble == null) {
             throw new NullPointerException("Must be implements interface IDrawableClickAble");
         }
-        final Drawable[] compoundDrawables = iDrawableClickAble.getCompoundDrawables();
+        final Drawable[] compoundDrawables = iDrawableClickAble.getCompoundDrawablesRelative();
         boolean[] isVisible = iDrawableClickAble.isVisible();
         if (compoundDrawables == null || compoundDrawables.length != 4) {
             throw new RuntimeException("compoundDrawables.length != 4");
@@ -72,17 +109,14 @@ public final class CompoundDrawablesClickHelper {
         if (isVisible == null || isVisible.length != 4) {
             throw new RuntimeException("isVisible.length != 4");
         }
-        if (isRtl()) {
-            this.iDrawableClickAble.setCompoundDrawables(isVisible[2] ? this.mEndDrawable == null ? compoundDrawables[2] : mEndDrawable : null,
-                    isVisible[1] ? this.mTopDrawable == null ? compoundDrawables[1] : mTopDrawable : null,
-                    isVisible[0] ? this.mStartDrawable == null ? compoundDrawables[0] : mStartDrawable : null,
-                    isVisible[3] ? this.mBottomDrawable == null ? compoundDrawables[3] : mBottomDrawable : null);
-        } else {
-            this.iDrawableClickAble.setCompoundDrawables(isVisible[0] ? this.mStartDrawable == null ? compoundDrawables[0] : mStartDrawable : null,
-                    isVisible[1] ? this.mTopDrawable == null ? compoundDrawables[1] : mTopDrawable : null,
-                    isVisible[2] ? this.mEndDrawable == null ? compoundDrawables[2] : mEndDrawable : null,
-                    isVisible[3] ? this.mBottomDrawable == null ? compoundDrawables[3] : mBottomDrawable : null);
-        }
+        isVisible[0] = isVisible[0] && (compoundDrawables[0] != null || mStartDrawable != null);
+        isVisible[1] = isVisible[1] && (compoundDrawables[1] != null || mTopDrawable != null);
+        isVisible[2] = isVisible[2] && (compoundDrawables[2] != null || mEndDrawable != null);
+        isVisible[3] = isVisible[3] && (compoundDrawables[3] != null || mBottomDrawable != null);
+        this.iDrawableClickAble.setCompoundDrawablesRelative(isVisible[0] ? this.mStartDrawable == null ? compoundDrawables[0] : mStartDrawable : null,
+                isVisible[1] ? this.mTopDrawable == null ? compoundDrawables[1] : mTopDrawable : null,
+                isVisible[2] ? this.mEndDrawable == null ? compoundDrawables[2] : mEndDrawable : null,
+                isVisible[3] ? this.mBottomDrawable == null ? compoundDrawables[3] : mBottomDrawable : null);
     }
 
     private Drawable wrap(Drawable drawable) {
@@ -120,21 +154,25 @@ public final class CompoundDrawablesClickHelper {
              */
             if (mDrawableClickListener != null) {
                 if (mIsStartTouched) {
-                    mDrawableClickListener.onClick(DrawableClickListener.DrawablePosition.START);
+                    mDrawableClickListener.onClick(DrawablePosition.START);
                 } else if (mIsTopTouched) {
-                    mDrawableClickListener.onClick(DrawableClickListener.DrawablePosition.TOP);
+                    mDrawableClickListener.onClick(DrawablePosition.TOP);
                 } else if (mIsEndTouched) {
-                    mDrawableClickListener.onClick(DrawableClickListener.DrawablePosition.END);
+                    mDrawableClickListener.onClick(DrawablePosition.END);
                 } else if (mIsBottomTouched) {
-                    mDrawableClickListener.onClick(DrawableClickListener.DrawablePosition.BOTTOM);
+                    mDrawableClickListener.onClick(DrawablePosition.BOTTOM);
                 }
             }
         }
         return iDrawableClickAble.callSuperOnTouchEvent(event);
     }
 
-    static boolean isRtl() {
-        return TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == ViewCompat.LAYOUT_DIRECTION_RTL;
+    boolean isRtl() {
+        Resources resources = iDrawableClickAble != null ? iDrawableClickAble.getResources() : null;
+        Configuration configuration = resources != null ? resources.getConfiguration() : null;
+        int layoutDirection = configuration != null ? configuration.getLayoutDirection() :
+                TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault());
+        return layoutDirection == ViewCompat.LAYOUT_DIRECTION_RTL;
     }
 
     @Override
@@ -325,35 +363,8 @@ public final class CompoundDrawablesClickHelper {
         this.mDrawableClickListener = listener;
     }
 
-    /**
-     * 图片点击的监听器
-     *
-     * @author Trinea 2012-5-3 下午11:45:41
-     */
+
     public interface DrawableClickListener {
-
-        /**
-         * 图片的位置
-         */
-        enum DrawablePosition {
-            /**
-             * 图片在TextView的左部
-             **/
-            START,
-            /**
-             * 图片在TextView的上部
-             **/
-            TOP,
-            /**
-             * 图片在TextView的右部
-             **/
-            END,
-            /**
-             * 图片在TextView的底部
-             **/
-            BOTTOM,
-        }
-
 
         /**
          * 点击相应位置的响应函数

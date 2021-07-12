@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ClearTextInputEditText">
+        <attr name="ct_cancel" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="DoubleEndDrawableEditText">
+        <attr name="ct_first_drawable" format="reference" />
+        <attr name="ct_second_drawable" format="reference" />
+        <attr name="ct_drawable_tint" format="reference|color" />
+    </declare-styleable>
+</resources>

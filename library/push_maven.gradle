@@ -1,0 +1,79 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'maven'
+def buildType = /*"SNAPSHOT" */"release"
+def mavenUrl = "http://" + String.valueOf(maven_address) + "/repository/globalegrow/"
+def mavenUrlSnapshot = "http://" + String.valueOf(maven_address) + "/repository/globalegrow-snapshot/"
+def mavenUserName = "longxl"
+def mavenPwd = "longxl123"
+def sdkVersionName = "1.0.2"
+def sdkVersionNameSnapshot = "1.0.1-SNAPSHOT"
+def pomName = "compoundText"
+def pomGroupId = "com.fz.compoundtext"
+def pomArtifactId = "compoundText"
+def pomPackaging = "aar"
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+task androidJavadocs(type: Javadoc) {
+    options.encoding = "utf-8"
+    source = android.sourceSets.main.java.srcDirs
+    failOnError false
+    //添加classpath，解析类型
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+//打包doc
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    archiveClassifier = 'javadoc' //分类器，区分jar
+    from androidJavadocs.destinationDir
+}
+
+//打包源码
+task androidSourcesJar(type: Jar) {
+    archiveClassifier = 'sources'//分类器，区分jar
+    from android.sourceSets.main.java.srcDirs
+}
+//解决 JavaDoc 中文注释生成失败的问题
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
+artifacts {
+    archives androidSourcesJar
+    archives androidJavadocsJar
+}
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            println "start upload aar build type:" + buildType
+            def ver = sdkVersionName
+            if (buildType == "release") {
+                println "uploadArchives build release"
+                repository(url: mavenUrl) {
+                    authentication(userName: mavenUserName, password: mavenPwd)
+                }
+                ver = sdkVersionName
+            } else {
+                //快照版本
+                println "uploadArchives build beta"
+                snapshotRepository(url: mavenUrlSnapshot) {
+                    authentication(userName: mavenUserName, password: mavenPwd)
+                }
+                ver = sdkVersionNameSnapshot
+            }
+            //pom必需的参数
+            pom.project {
+                name pomName
+                version ver
+                artifactId pomArtifactId
+                groupId pomGroupId
+                packaging pomPackaging
+            }
+            doLast {
+                println "upload aar success build type:" + buildType
+            }
+        }
+    }
+}
