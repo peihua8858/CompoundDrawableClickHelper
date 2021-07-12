@@ -8,24 +8,15 @@
  * you entered into with Globalegrow.
  */
 
-package com.zaful.view.widget;
+package com.fz.compoundtext;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatTextView;
-
-import com.fz.compoundtext.CompoundDrawablesClickHelper;
-import com.fz.compoundtext.DrawablePosition;
-import com.fz.compoundtext.IDrawableClickAble;
-import com.fz.compoundtext.OnDrawableClickListener;
 
 
 /**
