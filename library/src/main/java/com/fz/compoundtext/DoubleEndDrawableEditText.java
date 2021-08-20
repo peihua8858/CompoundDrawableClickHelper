@@ -185,6 +185,11 @@ public class DoubleEndDrawableEditText extends androidx.appcompat.widget.AppComp
     }
 
     @Override
+    public boolean isVisible(int position) {
+        return true;
+    }
+
+    @Override
     public final boolean callSuperOnTouchEvent(MotionEvent event) {
         return super.onTouchEvent(event);
     }

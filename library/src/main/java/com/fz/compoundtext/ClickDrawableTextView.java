@@ -1,13 +1,3 @@
-/*
- * Copyright (C) Globalegrow E-Commerce Co. , Ltd. 2007-2020.
- * All rights reserved.
- * This software is the confidential and proprietary information
- * of Globalegrow E-Commerce Co. , Ltd. ("Confidential Information").
- * You shall not disclose such Confidential Information and shall
- * use it only in accordance with the terms of the license agreement
- * you entered into with Globalegrow.
- */
-
 package com.fz.compoundtext;
 
 import android.content.Context;
@@ -30,7 +20,7 @@ public class ClickDrawableTextView extends AppCompatTextView implements IDrawabl
 
     private final CompoundDrawablesClickHelper drawablesClickHelper;
     private OnDrawableClickListener onDrawableClickListener;
-    private boolean isVisible = true;
+    private boolean isVisible[] = new boolean[]{true, true, true, true};
 
     public ClickDrawableTextView(final Context context) {
         this(context, null);
@@ -50,6 +40,31 @@ public class ClickDrawableTextView extends AppCompatTextView implements IDrawabl
     }
 
     public void setDrawableVisible(boolean isVisible) {
+        this.isVisible = new boolean[]{isVisible, isVisible, isVisible, isVisible};
+        drawablesClickHelper.setDrawables();
+    }
+
+    public void setStarDrawableVisible(boolean isVisible) {
+        this.isVisible[0] = isVisible;
+        drawablesClickHelper.setDrawables();
+    }
+
+    public void setTopDrawableVisible(boolean isVisible) {
+        this.isVisible[1] = isVisible;
+        drawablesClickHelper.setDrawables();
+    }
+
+    public void setEndDrawableVisible(boolean isVisible) {
+        this.isVisible[2] = isVisible;
+        drawablesClickHelper.setDrawables();
+    }
+
+    public void setBottomDrawableVisible(boolean isVisible) {
+        this.isVisible[3] = isVisible;
+        drawablesClickHelper.setDrawables();
+    }
+
+    public void setDrawableVisible(boolean[] isVisible) {
         this.isVisible = isVisible;
         drawablesClickHelper.setDrawables();
     }
@@ -74,7 +89,12 @@ public class ClickDrawableTextView extends AppCompatTextView implements IDrawabl
 
     @Override
     public boolean[] isVisible() {
-        return new boolean[]{true, true, isVisible, true};
+        return isVisible;
+    }
+
+    @Override
+    public boolean isVisible(int position) {
+        return isVisible[position];
     }
 
     @Override

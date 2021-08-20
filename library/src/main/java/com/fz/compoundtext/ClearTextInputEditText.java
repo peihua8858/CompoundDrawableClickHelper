@@ -1,13 +1,3 @@
-/*
- * Copyright (C) Globalegrow E-Commerce Co. , Ltd. 2007-2018.
- * All rights reserved.
- * This software is the confidential and proprietary information
- * of Globalegrow E-Commerce Co. , Ltd. ("Confidential Information").
- * You shall not disclose such Confidential Information and shall
- * use it only in accordance with the terms of the license agreement
- * you entered into with Globalegrow.
- */
-
 package com.fz.compoundtext;
 
 import android.content.Context;
@@ -33,7 +23,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class ClearTextInputEditText extends TextInputEditText implements IDrawableClickAble, TextWatcher, CompoundDrawablesClickHelper.DrawableClickListener {
 
     private CompoundDrawablesClickHelper drawablesClickHelper;
-    private boolean isVisible;
+    private boolean isVisible[] = new boolean[]{true, true, true, true};
 
     public ClearTextInputEditText(final Context context) {
         super(context);
@@ -69,9 +59,9 @@ public class ClearTextInputEditText extends TextInputEditText implements IDrawab
     @Override
     protected void onFocusChanged(boolean hasFocus, int direction, Rect previouslyFocusedRect) {
         if (hasFocus) {
-            setClearIconVisible(getText().length() > 0);
+            setDrawableVisible(getText().length() > 0);
         } else {
-            setClearIconVisible(false);
+            setDrawableVisible(false);
         }
         super.onFocusChanged(hasFocus, direction, previouslyFocusedRect);
     }
@@ -79,15 +69,38 @@ public class ClearTextInputEditText extends TextInputEditText implements IDrawab
     @Override
     public final void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
         if (isFocused()) {
-            setClearIconVisible(s.length() > 0);
+            setDrawableVisible(s.length() > 0);
         }
     }
 
-    private void setClearIconVisible(final boolean visible) {
-        isVisible = visible;
+    public void setDrawableVisible(boolean isVisible) {
+        this.isVisible = new boolean[]{isVisible, isVisible, isVisible, isVisible};
         drawablesClickHelper.setDrawables();
     }
 
+    public void setDrawableVisible(boolean[] isVisible) {
+        this.isVisible = isVisible;
+        drawablesClickHelper.setDrawables();
+    }
+    public void setStarDrawableVisible(boolean isVisible) {
+        this.isVisible[0] = isVisible;
+        drawablesClickHelper.setDrawables();
+    }
+
+    public void setTopDrawableVisible(boolean isVisible) {
+        this.isVisible[1] = isVisible;
+        drawablesClickHelper.setDrawables();
+    }
+
+    public void setEndDrawableVisible(boolean isVisible) {
+        this.isVisible[2] = isVisible;
+        drawablesClickHelper.setDrawables();
+    }
+
+    public void setBottomDrawableVisible(boolean isVisible) {
+        this.isVisible[3] = isVisible;
+        drawablesClickHelper.setDrawables();
+    }
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
     }
@@ -109,7 +122,12 @@ public class ClearTextInputEditText extends TextInputEditText implements IDrawab
 
     @Override
     public boolean[] isVisible() {
-        return new boolean[]{true, true, isVisible, true};
+        return isVisible;
+    }
+
+    @Override
+    public boolean isVisible(int position) {
+        return isVisible[position];
     }
 
     @Override

@@ -1,13 +1,3 @@
-/*
- * Copyright (C) Globalegrow E-Commerce Co. , Ltd. 2007-2018.
- * All rights reserved.
- * This software is the confidential and proprietary information
- * of Globalegrow E-Commerce Co. , Ltd. ("Confidential Information").
- * You shall not disclose such Confidential Information and shall
- * use it only in accordance with the terms of the license agreement
- * you entered into with Globalegrow.
- */
-
 package com.fz.compoundtext;
 
 import android.content.res.Configuration;
@@ -218,7 +208,8 @@ public final class CompoundDrawablesClickHelper {
      */
     private boolean touchStartDrawable(MotionEvent event) {
         Drawable drawable = isRtl() ? mEndDrawable : mStartDrawable;
-        if (drawable == null) {
+        boolean isVisible = iDrawableClickAble.isVisible(0);
+        if (drawable == null || !isVisible) {
             return false;
         }
 
@@ -242,7 +233,8 @@ public final class CompoundDrawablesClickHelper {
      * @return 是否在touch范围内
      */
     private boolean touchTopDrawable(MotionEvent event) {
-        if (mTopDrawable == null) {
+        boolean isVisible = iDrawableClickAble.isVisible(1);
+        if (mTopDrawable == null || !isVisible) {
             return false;
         }
 
@@ -266,7 +258,8 @@ public final class CompoundDrawablesClickHelper {
      */
     private boolean touchEndDrawable(MotionEvent event) {
         Drawable drawable = isRtl() ? mStartDrawable : mEndDrawable;
-        if (drawable == null) {
+        boolean isVisible = iDrawableClickAble.isVisible(2);
+        if (drawable == null || !isVisible) {
             return false;
         }
 
@@ -289,7 +282,8 @@ public final class CompoundDrawablesClickHelper {
      * @return 是否在touch范围内
      */
     private boolean touchBottomDrawable(MotionEvent event) {
-        if (mBottomDrawable == null) {
+        boolean isVisible = iDrawableClickAble.isVisible(3);
+        if (mBottomDrawable == null || !isVisible) {
             return false;
         }
 
