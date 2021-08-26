@@ -1,3 +1,4 @@
+[![](https://jitpack.io/v/peihua8858/CompoundDrawableClickHelper.svg)](https://jitpack.io/#peihua8858/CompoundDrawableClickHelper)
 # CompoundDrawableClickHelper
 Android 带清除功能的输入框控件EditText，支持TextView及子类的上、下、左、右图片点击事件
 ## 效果图：
