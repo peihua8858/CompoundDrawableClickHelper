@@ -18,7 +18,7 @@ import androidx.appcompat.widget.AppCompatTextView;
  */
 public class ClickDrawableTextView extends AppCompatTextView implements IDrawableClickAble, CompoundDrawablesClickHelper.DrawableClickListener {
 
-    private final CompoundDrawablesClickHelper drawablesClickHelper;
+    private CompoundDrawablesClickHelper drawablesClickHelper;
     private OnDrawableClickListener onDrawableClickListener;
     private boolean isVisible[] = new boolean[]{true, true, true, true};
 
@@ -27,11 +27,16 @@ public class ClickDrawableTextView extends AppCompatTextView implements IDrawabl
     }
 
     public ClickDrawableTextView(final Context context, final AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs, 0);
+        init(context, attrs);
     }
 
     public ClickDrawableTextView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(context, attrs);
+    }
+
+    private void init(Context context, AttributeSet attrs) {
         Drawable[] drawables = getCompoundDrawablesRelative();
         //注意，如果使用此自定义类且控件inputType为textPassword，则应调用 setGravity(Gravity.END);将焦点放右边
         setTextDirection(View.TEXT_DIRECTION_LOCALE);

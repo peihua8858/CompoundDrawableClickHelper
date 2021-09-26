@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:padding="20dp"
     android:layout_height="match_parent">
 
     <com.fz.compoundtext.ClearTextInputEditText
         android:id="@+id/tv_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
         android:text="aaaaa"
         app:ct_cancel="@mipmap/cancel"
         android:textColor="#000000"
@@ -18,7 +19,7 @@
 
     <com.fz.compoundtext.ClickDrawableTextView
         android:id="@+id/cdtv_test"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableEnd="@mipmap/cancel"
         android:text="bbbbbbbbbb"
@@ -26,4 +27,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_input" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_new_password"
+        android:layout_width="match_parent"
+        app:theme="@style/MyCustomInputLayout"
+        android:layout_height="wrap_content"
+        android:paddingTop="9dp">
+
+        <com.fz.compoundtext.DoubleEndDrawableEditText
+            android:id="@+id/et_new_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="密码"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:maxLength="32"
+            android:maxLines="1"
+            android:paddingStart="7dp"
+            android:paddingBottom="10dp"
+            android:textSize="14sp"
+            app:ct_drawable_tint="#999999"
+            app:ct_first_drawable="@mipmap/remind_icon"
+            app:ct_second_drawable="@mipmap/cancel"
+            tools:ignore="InvalidImeActionId,RtlSymmetry" />
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

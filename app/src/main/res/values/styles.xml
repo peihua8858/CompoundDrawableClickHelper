@@ -7,5 +7,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <style name="MyCustomInputLayout" parent="AppTheme">
+        <item name="android:textColorHint">#cccccc</item>
+        <item name="android:textSize">14sp</item>
+        <!--<item name="android:textColorHighlight">@color/color_333333</item>-->
+        <!-- Hint color and label color in FALSE state -->
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <!--<item name="colorAccent">@color/color_333333</item>-->
+        <item name="colorControlNormal">#dddddd</item>
+        <item name="colorControlActivated">#dddddd</item>
+        <item name="android:textColorLink">#dddddd</item>
+    </style>
 </resources>

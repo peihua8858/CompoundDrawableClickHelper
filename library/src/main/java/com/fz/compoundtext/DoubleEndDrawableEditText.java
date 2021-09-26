@@ -14,6 +14,8 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.IntDef;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 /**
  * {@link #getCompoundDrawables()}[2]两个图标切换的EditText
  * {@link #mFirstDrawable} 默认图标
@@ -23,7 +25,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
  * @version 1.0
  * @date 2020/5/10 12:49
  */
-public class DoubleEndDrawableEditText extends androidx.appcompat.widget.AppCompatEditText implements IDrawableClickAble, OnFocusChangeListener, TextWatcher, CompoundDrawablesClickHelper.DrawableClickListener {
+public class DoubleEndDrawableEditText extends TextInputEditText implements IDrawableClickAble, OnFocusChangeListener, TextWatcher, CompoundDrawablesClickHelper.DrawableClickListener {
     public final static int DRAWABLE_FIRST = 0x11;
     public final static int DRAWABLE_SECOND = 0x12;
 
@@ -36,7 +38,7 @@ public class DoubleEndDrawableEditText extends androidx.appcompat.widget.AppComp
     @ColorInt
     public int colorInt;
     private boolean isChangedColorInt = false;
-    protected final CompoundDrawablesClickHelper drawablesClickHelper;
+    protected CompoundDrawablesClickHelper drawablesClickHelper;
     protected OnDoubleDrawableClickListener onDoubleDrawableClickListener;
     @DrawableType
     private int showDrawableType;
@@ -47,11 +49,16 @@ public class DoubleEndDrawableEditText extends androidx.appcompat.widget.AppComp
 
     public DoubleEndDrawableEditText(Context context, AttributeSet attrs) {
         //这里构造方法也很重要，不加这个很多属性不能再XML里面定义
-        this(context, attrs, android.R.attr.editTextStyle);
+        super(context, attrs);
+        init(context, attrs);
     }
 
     public DoubleEndDrawableEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init(context, attrs);
+    }
+
+    private void init(Context context, AttributeSet attrs) {
         //后面输入的如是阿拉伯语，则显示在最左边，光标在最左边
         setTextDirection(View.TEXT_DIRECTION_LOCALE);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DoubleEndDrawableEditText);
