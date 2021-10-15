@@ -42,6 +42,7 @@ public class DoubleEndDrawableEditText extends TextInputEditText implements IDra
     protected OnDoubleDrawableClickListener onDoubleDrawableClickListener;
     @DrawableType
     private int showDrawableType;
+    private boolean isVisible[] = new boolean[]{true, true, true, true};
 
     public DoubleEndDrawableEditText(Context context) {
         this(context, null);
@@ -95,6 +96,36 @@ public class DoubleEndDrawableEditText extends TextInputEditText implements IDra
             drawables[2] = mFirstDrawable;
         }
         drawablesClickHelper.setCompoundDrawables(drawables);
+    }
+
+    public void setDrawableVisible(boolean isVisible) {
+        this.isVisible = new boolean[]{isVisible, isVisible, isVisible, isVisible};
+        drawablesClickHelper.setDrawables();
+    }
+
+    public void setStarDrawableVisible(boolean isVisible) {
+        this.isVisible[0] = isVisible;
+        drawablesClickHelper.setDrawables();
+    }
+
+    public void setTopDrawableVisible(boolean isVisible) {
+        this.isVisible[1] = isVisible;
+        drawablesClickHelper.setDrawables();
+    }
+
+    public void setEndDrawableVisible(boolean isVisible) {
+        this.isVisible[2] = isVisible;
+        drawablesClickHelper.setDrawables();
+    }
+
+    public void setBottomDrawableVisible(boolean isVisible) {
+        this.isVisible[3] = isVisible;
+        drawablesClickHelper.setDrawables();
+    }
+
+    public void setDrawableVisible(boolean[] isVisible) {
+        this.isVisible = isVisible;
+        drawablesClickHelper.setDrawables();
     }
 
     public void setOnDoubleDrawableClickListener(OnDoubleDrawableClickListener onDoubleDrawableClickListener) {
@@ -188,12 +219,12 @@ public class DoubleEndDrawableEditText extends TextInputEditText implements IDra
 
     @Override
     public boolean[] isVisible() {
-        return new boolean[]{true, true, true, true};
+        return isVisible;
     }
 
     @Override
     public boolean isVisible(int position) {
-        return true;
+        return isVisible[position];
     }
 
     @Override

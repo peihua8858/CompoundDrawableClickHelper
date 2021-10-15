@@ -23,7 +23,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class ClearTextInputEditText extends TextInputEditText implements IDrawableClickAble, TextWatcher, CompoundDrawablesClickHelper.DrawableClickListener {
 
     private CompoundDrawablesClickHelper drawablesClickHelper;
-    private boolean isVisible[] = new boolean[]{true, true, true, true};
+    private boolean isVisible[] = new boolean[]{true, true, false, true};
 
     public ClearTextInputEditText(final Context context) {
         super(context);
