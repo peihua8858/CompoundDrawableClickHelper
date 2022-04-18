@@ -254,7 +254,7 @@ public class DoubleEndDrawableEditText extends TextInputEditText implements IDra
          * @date 2020/5/10 13:20
          * @version 1.0
          */
-        void onFirstDrawableClick(View view, DrawablePosition position);
+        void onFirstDrawableClick(DoubleEndDrawableEditText view, DrawablePosition position);
 
         /**
          * 第二个图标点击事件
@@ -265,7 +265,7 @@ public class DoubleEndDrawableEditText extends TextInputEditText implements IDra
          * @date 2020/5/10 13:20
          * @version 1.0
          */
-        default void onSecondDrawableClick(View view, DrawablePosition position) {
+        default void onSecondDrawableClick(DoubleEndDrawableEditText view, DrawablePosition position) {
             onDrawableClick(view, position);
         }
     }

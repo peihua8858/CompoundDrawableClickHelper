@@ -219,10 +219,11 @@ public final class CompoundDrawablesClickHelper {
         int topBottomDis = (mTopDrawable == null ? 0 : mTopDrawable.getIntrinsicHeight())
                 - (mBottomDrawable == null ? 0 : mBottomDrawable.getIntrinsicHeight());
         double imageCenterY = 0.5 * (iDrawableClickAble.getHeight() + topBottomDis);
-        Rect imageBounds = new Rect(iDrawableClickAble.getCompoundDrawablePadding() - mLazyX,
-                (int) (imageCenterY - 0.5 * drawHeight - mLazyY), iDrawableClickAble.getCompoundDrawablePadding()
-                + drawWidth + mLazyX,
-                (int) (imageCenterY + 0.5 * drawHeight + mLazyY));
+        Rect imageBounds = new Rect(
+                iDrawableClickAble.getCompoundDrawablePadding() - mLazyX + getHorizontalPadding(),
+                (int) (imageCenterY - 0.5 * drawHeight - mLazyY + getVerticalPadding()),
+                iDrawableClickAble.getCompoundDrawablePadding() + drawWidth + mLazyX + getHorizontalPadding(),
+                (int) (imageCenterY + 0.5 * drawHeight + mLazyY + getVerticalPadding()));
         return imageBounds.contains((int) event.getX(), (int) event.getY());
     }
 
@@ -243,10 +244,11 @@ public final class CompoundDrawablesClickHelper {
         int leftRightDis = (mStartDrawable == null ? 0 : mStartDrawable.getIntrinsicWidth())
                 - (mEndDrawable == null ? 0 : mEndDrawable.getIntrinsicWidth());
         double imageCenterX = 0.5 * (iDrawableClickAble.getWidth() + leftRightDis);
-        Rect imageBounds = new Rect((int) (imageCenterX - 0.5 * drawWidth - mLazyX), iDrawableClickAble.getCompoundDrawablePadding()
-                - mLazyY,
-                (int) (imageCenterX + 0.5 * drawWidth + mLazyX), iDrawableClickAble.getCompoundDrawablePadding()
-                + drawHeight + mLazyY);
+        Rect imageBounds = new Rect(
+                (int) (imageCenterX - 0.5 * drawWidth - mLazyX) + getHorizontalPadding(),
+                iDrawableClickAble.getCompoundDrawablePadding() - mLazyY + getVerticalPadding(),
+                (int) (imageCenterX + 0.5 * drawWidth + mLazyX) + getHorizontalPadding(),
+                iDrawableClickAble.getCompoundDrawablePadding() + drawHeight + mLazyY + getVerticalPadding());
         return imageBounds.contains((int) event.getX(), (int) event.getY());
     }
 
@@ -268,10 +270,11 @@ public final class CompoundDrawablesClickHelper {
         int topBottomDis = (mTopDrawable == null ? 0 : mTopDrawable.getIntrinsicHeight())
                 - (mBottomDrawable == null ? 0 : mBottomDrawable.getIntrinsicHeight());
         double imageCenterY = 0.5 * (iDrawableClickAble.getHeight() + topBottomDis);
-        Rect imageBounds = new Rect(iDrawableClickAble.getWidth() - iDrawableClickAble.getCompoundDrawablePadding() - drawWidth - mLazyX,
-                (int) (imageCenterY - 0.5 * drawHeight - mLazyY),
-                iDrawableClickAble.getWidth() - iDrawableClickAble.getCompoundDrawablePadding() + mLazyX,
-                (int) (imageCenterY + 0.5 * drawHeight + mLazyY));
+        Rect imageBounds = new Rect(
+                iDrawableClickAble.getWidth() - iDrawableClickAble.getCompoundDrawablePadding() - drawWidth - mLazyX + getHorizontalPadding(),
+                (int) (imageCenterY - 0.5 * drawHeight - mLazyY + getVerticalPadding()),
+                iDrawableClickAble.getWidth() - iDrawableClickAble.getCompoundDrawablePadding() + mLazyX + getHorizontalPadding(),
+                (int) (imageCenterY + 0.5 * drawHeight + mLazyY + getVerticalPadding()));
         return imageBounds.contains((int) event.getX(), (int) event.getY());
     }
 
@@ -292,13 +295,20 @@ public final class CompoundDrawablesClickHelper {
         int leftRightDis = (mStartDrawable == null ? 0 : mStartDrawable.getIntrinsicWidth())
                 - (mEndDrawable == null ? 0 : mEndDrawable.getIntrinsicWidth());
         double imageCenterX = 0.5 * (iDrawableClickAble.getWidth() + leftRightDis);
-        Rect imageBounds = new Rect((int) (imageCenterX - 0.5 * drawWidth - mLazyX), iDrawableClickAble.getHeight()
-                - iDrawableClickAble.getCompoundDrawablePadding()
-                - drawHeight - mLazyY,
-                (int) (imageCenterX + 0.5 * drawWidth + mLazyX), iDrawableClickAble.getHeight()
-                - iDrawableClickAble.getCompoundDrawablePadding()
-                + mLazyY);
+        Rect imageBounds = new Rect(
+                (int) (imageCenterX - 0.5 * drawWidth - mLazyX + getHorizontalPadding()),
+                iDrawableClickAble.getHeight() - iDrawableClickAble.getCompoundDrawablePadding() - drawHeight - mLazyY + getVerticalPadding(),
+                (int) (imageCenterX + 0.5 * drawWidth + mLazyX + getHorizontalPadding()),
+                iDrawableClickAble.getHeight() - iDrawableClickAble.getCompoundDrawablePadding() + mLazyY + getVerticalPadding());
         return imageBounds.contains((int) event.getX(), (int) event.getY());
+    }
+
+    private int getHorizontalPadding() {
+        return iDrawableClickAble.getPaddingStart() - iDrawableClickAble.getPaddingEnd();
+    }
+
+    private int getVerticalPadding() {
+        return iDrawableClickAble.getPaddingTop() - iDrawableClickAble.getPaddingBottom();
     }
 
     /**

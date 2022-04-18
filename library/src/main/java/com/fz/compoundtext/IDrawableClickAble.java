@@ -94,4 +94,12 @@ public interface IDrawableClickAble {
     void setFocusable(boolean focusable);
 
     void setClickable(boolean clickable);
+
+    int getPaddingStart();
+
+    int getPaddingEnd();
+
+    int getPaddingTop();
+
+    int getPaddingBottom();
 }
