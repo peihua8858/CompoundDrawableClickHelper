@@ -100,6 +100,7 @@ public class ClearTextInputEditText extends TextInputEditText implements IDrawab
     public void setBottomDrawableVisible(boolean isVisible) {
         this.isVisible[3] = isVisible;
         drawablesClickHelper.setDrawables();
+
     }
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -121,12 +122,12 @@ public class ClearTextInputEditText extends TextInputEditText implements IDrawab
     }
 
     @Override
-    public boolean[] isVisible() {
+    public boolean[] isVisibilities() {
         return isVisible;
     }
 
     @Override
-    public boolean isVisible(int position) {
+    public boolean isVisibility(int position) {
         return isVisible[position];
     }
 

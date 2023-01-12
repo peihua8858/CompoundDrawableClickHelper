@@ -63,7 +63,7 @@ public interface IDrawableClickAble {
      *
      * @return Visible[start, top, end, bottom]
      */
-    boolean[] isVisible();
+    boolean[] isVisibilities();
 
     /**
      * 获取指定位置的图片是否显示
@@ -72,7 +72,7 @@ public interface IDrawableClickAble {
      * @param position
      * @return
      */
-    boolean isVisible(int position);
+    boolean isVisibility(int position);
 
     /**
      * 调用父类的onTouchEvent方法

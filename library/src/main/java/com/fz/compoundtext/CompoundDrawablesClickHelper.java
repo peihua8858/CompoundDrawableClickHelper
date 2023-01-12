@@ -92,7 +92,7 @@ public final class CompoundDrawablesClickHelper {
             throw new NullPointerException("Must be implements interface IDrawableClickAble");
         }
         final Drawable[] compoundDrawables = iDrawableClickAble.getCompoundDrawablesRelative();
-        boolean[] isVisible = iDrawableClickAble.isVisible();
+        boolean[] isVisible = iDrawableClickAble.isVisibilities();
         if (compoundDrawables == null || compoundDrawables.length != 4) {
             throw new RuntimeException("compoundDrawables.length != 4");
         }
@@ -208,7 +208,7 @@ public final class CompoundDrawablesClickHelper {
      */
     private boolean touchStartDrawable(MotionEvent event) {
         Drawable drawable = isRtl() ? mEndDrawable : mStartDrawable;
-        boolean isVisible = iDrawableClickAble.isVisible(0);
+        boolean isVisible = iDrawableClickAble.isVisibility(0);
         if (drawable == null || !isVisible) {
             return false;
         }
@@ -234,7 +234,7 @@ public final class CompoundDrawablesClickHelper {
      * @return 是否在touch范围内
      */
     private boolean touchTopDrawable(MotionEvent event) {
-        boolean isVisible = iDrawableClickAble.isVisible(1);
+        boolean isVisible = iDrawableClickAble.isVisibility(1);
         if (mTopDrawable == null || !isVisible) {
             return false;
         }
@@ -260,7 +260,7 @@ public final class CompoundDrawablesClickHelper {
      */
     private boolean touchEndDrawable(MotionEvent event) {
         Drawable drawable = isRtl() ? mStartDrawable : mEndDrawable;
-        boolean isVisible = iDrawableClickAble.isVisible(2);
+        boolean isVisible = iDrawableClickAble.isVisibility(2);
         if (drawable == null || !isVisible) {
             return false;
         }
@@ -285,7 +285,7 @@ public final class CompoundDrawablesClickHelper {
      * @return 是否在touch范围内
      */
     private boolean touchBottomDrawable(MotionEvent event) {
-        boolean isVisible = iDrawableClickAble.isVisible(3);
+        boolean isVisible = iDrawableClickAble.isVisibility(3);
         if (mBottomDrawable == null || !isVisible) {
             return false;
         }

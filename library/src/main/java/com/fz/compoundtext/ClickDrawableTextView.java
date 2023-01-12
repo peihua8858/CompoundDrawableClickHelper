@@ -93,12 +93,12 @@ public class ClickDrawableTextView extends AppCompatTextView implements IDrawabl
     }
 
     @Override
-    public boolean[] isVisible() {
+    public boolean[] isVisibilities() {
         return isVisible;
     }
 
     @Override
-    public boolean isVisible(int position) {
+    public boolean isVisibility(int position) {
         return isVisible[position];
     }
 
